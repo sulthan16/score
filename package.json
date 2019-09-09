@@ -1,0 +1,31 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "yarn start --prefix client",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.7.0",
+    "node-fetch": "^2.6.0",
+    "path": "^0.12.7",
+    "sequelize": "^5.18.4",
+    "universal-config": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
