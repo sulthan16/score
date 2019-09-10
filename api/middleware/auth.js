@@ -1,13 +1,14 @@
-const jwt = require('jsonwebtoken');
-module.exports = (req, res, next) => {
-    try {
-        const decoded = jwt.verify(req.body.token, process.env.JWT_KEY);
-        req.userData = decoded;
-        next();
-    } catch (error) {
-        return res.status(401).json({
-            message: 'Auth Failed'
-        });
-    }
+const passport = require('passport')
 
+module.exports = function (req, res, next) {
+  passport.authenticate('jwt', function (err, user) {
+    if (err || !user) {
+      res.status(403).send({
+        error: 'you dont have access to this resource'
+      })
+    } else {
+      req.user = user
+      next()
+    }
+  })(req, res, next)
 }

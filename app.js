@@ -25,6 +25,7 @@ app.use(bodyParser.json());
 
 const router = express.Router();
 app.use('/api', router);
+require('./api/passport');
 require('./api/routes')(router);
 
 app.use('/uploads', express.static('uploads'));

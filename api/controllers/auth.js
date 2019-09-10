@@ -35,14 +35,12 @@ module.exports = {
 
       const userJson = user.toJSON();
       const jwt = jwtSignUser(userJson);
+      
       user.update({
         token: jwt,
         updatedAt: new Date,
-      }, {
-        where: {
-          id: userJson.id
-        }
-      })
+      });
+
       res.send({
         user: {
           email: userJson.email,
