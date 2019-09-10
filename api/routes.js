@@ -1,8 +1,9 @@
-const authCheck = require('./middleware/auth');
-const auth = require("./controllers/auth");
-const product = require("./controllers/product");
+const isAuthenticated = require('./middleware/isAuthenticated');
+
+const auth = require("./controllers/AuthController");
+const product = require("./controllers/ProductController");
 
 module.exports = (app) => {
     app.post('/login', auth.login);
-    app.get('/product',authCheck, product.getProduct);
+    app.get('/product',isAuthenticated, product.getProduct);
 }
