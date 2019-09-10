@@ -7,10 +7,12 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "yarn start --prefix client",
-    "dev": "concurrently \"yarn server\" \"yarn client\""
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "seed": "node ./api/database/seeders"
   },
   "dependencies": {
     "babel-register": "^6.26.0",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
     "cors": "^2.8.5",

@@ -3,6 +3,6 @@ const auth = require("./controllers/auth");
 const product = require("./controllers/product");
 
 module.exports = (app) => {
-    app.get('/login',authCheck, auth.login);
-    app.get('/product', product.getProduct);
+    app.post('/login', auth.login);
+    app.get('/product',authCheck, product.getProduct);
 }
