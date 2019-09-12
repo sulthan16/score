@@ -1,0 +1,16 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  width: 100%;
+  height: calc(100vh) !important;
+  overflow-y: overlay;
+  background: #F5F5F5;
+}
