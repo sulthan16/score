@@ -6,7 +6,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import history from "routes/history";
 // import Loading from "components/loader";
 import { withRouter } from "react-router";
-// import login from 'pages/login';
+import login from 'pages/login';
 import Home from 'pages/home';
 
 function AppRouter() {
@@ -26,7 +26,7 @@ function AppRouter() {
   return (
     <Router history={history}>
       <Switch>
-        {/* <Route exact name="Login" path="/login" component={login} /> */}
+        <Route exact name="Login" path="/login" component={login} />
         <Route path="/" name="Root" exact component={Home} />
         {/* <Route path="/" name="Root" exact render={clearLocalStorage} /> */}
         {/* <Route exact path="/home" name="Home" component={LoadableComponent(() => import('pages/home'))} />
