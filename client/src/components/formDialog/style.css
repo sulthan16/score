@@ -1,0 +1,15 @@
+.MuiDialogContent-root::-webkit-scrollbar {
+    height: 3px !important;
+    width: 3px !important;
+}
+.MuiDialogContent-root::-webkit-scrollbar-track {
+    border-radius: 16px;
+    background-color: rgba(0, 0, 0, 0.26) !important;
+}
+.MuiDialogContent-root::-webkit-scrollbar-thumb {
+    border-radius: 16px;
+    background: #FFBB00 !important;
+}
+.MuiDialogContent-root::-webkit-scrollbar-thumb {
+    background: #FFBB00 !important;
+}
