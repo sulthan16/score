@@ -1,0 +1,26 @@
+[
+  {
+    "stock": 20,
+    "type": "in",
+    "total": 20,
+    "ProductId": 1
+  },
+  {
+    "stock": 10,
+    "type": "out",
+    "total": 10,
+    "ProductId": 1
+  },
+  {
+    "stock": 20,
+    "type": "in",
+    "total": 20,
+    "ProductId": 2
+  },
+  {
+    "stock": 17,
+    "type": "in",
+    "total": 3,
+    "ProductId": 2
+  }
+]

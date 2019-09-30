@@ -18,9 +18,11 @@
     "react": "latest",
     "react-confirm": "^0.1.18",
     "react-dom": "latest",
+    "react-image-crop": "^8.3.1",
     "react-material-ui-form-validator": "^2.0.9",
     "react-router-dom": "^5.0.1",
     "react-scripts": "latest",
+    "react-select": "^3.0.5",
     "recharts": "^1.7.1",
     "use-global-hook": "^0.1.11"
   },

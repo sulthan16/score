@@ -1,0 +1,20 @@
+[
+  {
+    "title": "yeezy",
+    "thumb": "https://sneakernews.com/wp-content/uploads/2017/11/yeezy-boost-350-vs-beluga-2.0-store-list.jpg",
+    "images": "https://sneakernews.com/wp-content/uploads/2017/11/yeezy-boost-350-vs-beluga-2.0-store-list.jpg",
+    "price": 100000,
+    "sellPrice": 10000000,
+    "discon": 10,
+    "CategoryId": 2
+  },
+  {
+    "title": "nike jordan",
+    "thumb": "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/kktwh4oa73m3tklzjpxd/air-jordan-1-low-shoe-v2kdOZ.jpg",
+    "images": "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/kktwh4oa73m3tklzjpxd/air-jordan-1-low-shoe-v2kdOZ.jpg",
+    "price": 200000,
+    "sellPrice": 20000000,
+    "discon": 20,
+    "CategoryId": 1
+  }
+]
