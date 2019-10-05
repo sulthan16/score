@@ -52,11 +52,12 @@ function Categories(props) {
     }
     const handleDelete = (value) => {
         confirm("Delete", "Are you sure to Delete ?").then(
-            (onProcess) => {
-                console.log('process')
+            async (onProcess) => {
+                await categoryActions.deleted(value)
+                setComponentWillMount(!componentWillMount);
             },
             (onCancel) => {
-                console.log('cancel')
+                setComponentWillMount(!componentWillMount);
             }
         );
     };

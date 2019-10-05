@@ -52,11 +52,12 @@ function AllItems(props) {
     }
      const handleDelete = (value) => {
         confirm("Delete", "Are you sure to Delete ?").then(
-            (onProcess) => {
-                console.log('process')
+            async (onProcess) => {
+                await productActions.deleted(value)
+                setComponentWillMount(!componentWillMount);
             },
             (onCancel) => {
-                console.log('cancel')
+                setComponentWillMount(!componentWillMount);
             }
         );
     };

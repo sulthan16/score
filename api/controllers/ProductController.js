@@ -1,4 +1,5 @@
 const db = require('../models');
+const { Product, Stock } = require('../models');
 module.exports = {
 	async get(req, res) {
 		try {
@@ -12,9 +13,25 @@ module.exports = {
 
 			res.status(200).send({ result: stocks[0], status: 200 });
 		} catch (err) {
-			console.log(err);
 			res.status(500).send({
 				error: 'error while fething data products APIs'
+			})
+		}
+	},
+	async delete(req, res) {
+		try {
+			const { id } = req.params
+			const product = await Product.findByPk(id);
+			await Stock.destroy({ where: { ProductId: id } })
+			await product.destroy()
+			res.status(200).send({
+				status: 200,
+				result: null
+			})
+		} catch (err) {
+			console.log(err);
+			res.status(500).send({
+				error: 'error while trying delete Api'
 			})
 		}
 	}

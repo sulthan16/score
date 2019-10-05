@@ -27,5 +27,32 @@ module.exports = {
                 error: 'error while fething data categories APIs'
             })
         }
-    }
+    },
+    async store(req, res) {
+		try {
+			const category = await Category.create(req.body)
+			res.send(songs)
+		} catch (err) {
+			console.log(err)
+			res.status(500).send({
+				error: 'error while insert data songs APIs'
+			})
+		}
+	},
+    async delete(req, res) {
+		try {
+			const { categoryId } = req.params
+			const category = await Category.findByPk(categoryId)
+			await category.destroy()
+			res.status(200).send({
+				status: 200,
+				result: category
+			})
+		} catch (err) {
+			console.log(err);
+			res.status(500).send({
+				error: 'error while trying delete Api'
+			})
+		}
+	}
 }

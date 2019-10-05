@@ -10,6 +10,7 @@ import CustomizedDialogs from 'components/formDialog';
 import { confirm } from 'components/confirmationDialog';
 import { confirmable, createConfirmation } from "react-confirm";
 import Upload from 'components/imageUpload';
+import appStore from 'store/App';
 
 const styles = theme => ({
     header: {
@@ -30,6 +31,7 @@ const styles = theme => ({
 function Form(props) {
     const { classes, width, data, cancel } = props;
     const [openDialog, setOpenDialog] = React.useState(true);
+    const [appState, appActions] = appStore();
     const [state, setState] = React.useState({
         formData: {
             id: '',
@@ -52,6 +54,9 @@ function Form(props) {
 
 
     const handleCloseDialog = () => {
+        if (appState.imageUpload) {
+            appActions.setImageUpload(['']);
+        }
         setOpenDialog(false);
     }
 
