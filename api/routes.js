@@ -11,6 +11,7 @@ module.exports = (app) => {
     app.post('/insertProduct', isAuthenticated, product.store);
     app.put('/updateProduct/:id', isAuthenticated, product.put);
     app.get('/product', isAuthenticated, product.get);
+    app.get('/productFind', isAuthenticated, product.getByBarcode);
     app.delete('/product/:id', isAuthenticated, product.delete);
 
     app.get('/categories', isAuthenticated, categories.get);

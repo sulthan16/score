@@ -14,6 +14,7 @@ import productStore from 'pages/allItems/store';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { green, red } from '@material-ui/core/colors';
 import SelectValidate from 'components/selectValidate';
+import SnackBars from 'components/snackbars';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -75,6 +76,7 @@ function Cashier(props) {
     const [productState, productActions] = productStore();
     const [loading, setLoading] = React.useState(false);
     const [componentWillMount] = React.useState(false);
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
     const [state, setState] = React.useState({
         formData: { jumlah: 1, product: '', barcode: '' }
     });
@@ -85,53 +87,45 @@ function Cashier(props) {
 
     React.useEffect(() => {
         productActions.get()
-        autoFocus.current.focus();
     }, [componentWillMount, productActions]);
 
     const buttonClassname = clsx({
         [classes.buttonSuccess]: success,
     });
 
-    const hitEnter = (event) => {
-        event.preventDefault();
-        findProductByBarcode(state.formData);
-    }
-
-    const findProductByBarcode = async (value) => {
-        const { formData } = state;
-        const response = await productActions.findProduct(value);
-        if (response) {
-            formData['barcode'] = '';
-            setState({ formData });
-        } else {
-            formData['barcode'] = '';
-            setState({ formData });
-        }
+    function handleClose() {
+        setOpenSnackBar(false);
     }
 
     const handleChange = (event) => {
         const { formData } = state;
         formData[event.target.name] = event.target.value;
         setState({ formData });
+        if (formData['barcode']) {
+            formData[event.target.name] = event.target.value;
+            handleInputProductChange(event)
+        }
     }
     const handleChangeProduct = (data) => {
         const { formData } = state;
         formData['product'] = data;
         setState({ formData });
     }
-    const handleInputProductChange = (value) => {
-        if (value !== '') {
+    const handleInputProductChange = async (event) => {
+        if (event.target.value !== '') {
             var query = {
                 num: '200',
                 cursor: '',
                 position: '',
-                search: value
+                search: event.target.value
             }
-            productActions.get(query);
+            const res = await productActions.find(query);
+            if (res) {
+                handleOnSubmit(event, res);
+            }
         }
-        return value
     }
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = (event, res) => {
         event.preventDefault();
         if (!loading) {
             setSuccess(false);
@@ -139,19 +133,23 @@ function Cashier(props) {
             timer.current = setTimeout(() => {
                 const { formData } = state;
                 const { product } = shoppingCart;
-                product.push({
-                    jumlah: parseInt(formData['jumlah']),
-                    barang: formData['product'],
-                    total: (formData['product'].data.sellPrice * parseInt(formData['jumlah']))
-                })
-                setShoppingCart({
-                    product
-                });
-                formData['jumlah'] = 1;
-                formData['product'] = '';
-                setState({ formData });
-                setSuccess(true);
-                setLoading(false);
+                if (res) {
+                    res.jumlah = 1;
+                    res.total = res.sellPrice;
+                    product.push(res);
+                    setShoppingCart({
+                        product
+                    });
+                    formData['barcode'] = '';
+                    setState({ formData });
+                    setSuccess(true);
+                    setLoading(false);
+                } else {
+                    setOpenSnackBar(true);
+                    setSuccess(true);
+                    setLoading(false);
+                }
+
             }, 1000);
         }
 
@@ -186,17 +184,15 @@ function Cashier(props) {
         console.log(shoppingCart);
         setShoppingCart({ product: [] });
     }
-    const getSearchProduct = (productState && productState.data.map(product =>
-        ({ value: product.id, label: product.title, data: product })));
+    // const getSearchProduct = (productState && productState.data.map(product =>
+    //     ({ value: product.id, label: product.title, data: product })));
+
     return (
         <BaseLayout>
             <React.Fragment>
+                <SnackBars open={openSnackBar} msg="barang tidak ditemukan" handleClose={handleClose} />
                 <Paper className={classes.paper}>
                     <Title>Cashier</Title>
-                    <form onSubmit={(e) => { hitEnter(e) }}>
-                        <input ref={autoFocus} type="text" name="barcode" value={state.formData.barcode} onChange={handleChange} />
-                    </form>
-
                 </Paper>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={4}>
@@ -205,7 +201,19 @@ function Cashier(props) {
                                 className={classes.form}
                                 onSubmit={(e) => { handleOnSubmit(e) }}
                             >
-                                <SelectValidate
+                                <TextValidator
+                                    id="barcode"
+                                    label="Barcode"
+                                    name="barcode"
+                                    fullWidth
+                                    margin="normal"
+                                    value={state.formData.barcode}
+                                    variant="outlined"
+                                    type="text"
+                                    onChange={handleChange}
+                                    autoFocus
+                                />
+                                {/* <SelectValidate
                                     value={state.formData.product}
                                     id="findProduct"
                                     name="findProduct"
@@ -233,7 +241,7 @@ function Cashier(props) {
                                     variant="outlined"
                                     type="number"
                                     onChange={handleChange}
-                                />
+                                /> */}
                                 <div className={classes.wrapper}>
                                     <Button
                                         variant="contained"
@@ -258,7 +266,7 @@ function Cashier(props) {
                                         {shoppingCart.product.map((item, key) => (
                                             <ListItem key={`item-${key}`}>
                                                 <ListItemText
-                                                    primary={`${item.barang.label}`}
+                                                    primary={`${item.title}`}
                                                     secondary={`jumlah:${item.jumlah} | harga:${formatRupiah(item.total, 'Rp. ')}`}
                                                 />
                                                 <ListItemSecondaryAction>

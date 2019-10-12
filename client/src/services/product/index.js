@@ -6,6 +6,10 @@ export default class CategoryService {
         const instance = await ApiService();
         return instance.get(`/product`);
     }
+    static findData = async (params)=>{
+        const instance = await ApiService();
+        return instance.get(`/productFind?search=${params.search}`);
+    }
     static storeData = async (value) => {
         const instance = await ApiService();
         const params = {

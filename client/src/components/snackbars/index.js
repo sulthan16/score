@@ -4,27 +4,19 @@ import Slide from '@material-ui/core/Slide';
 
 export default function TransitionsSnackbar(props) {
     const { msg } = props;
-    const [state, setState] = React.useState({
-        open: true,
+    const [state, ] = React.useState({
         Transition: Slide,
     });
-
-    function handleClose() {
-        setState({
-            ...state,
-            open: false,
-        });
-    }
 
     return (
 
         <div>
             <Snackbar
-                open={state.open}
-                onClose={handleClose}
+                open={props.open}
+                onClose={props.handleClose}
                 TransitionComponent={state.Transition}
                 message={msg}
-                autoHideDuration={3000}
+                autoHideDuration={1000}
             />
         </div >
     );

@@ -20,6 +20,27 @@ export const get = async (store, query) => {
         store.setState({ isLoading, status, message });
     }
 };
+export const find = async (store, query) => {
+    const isLoading = true;
+    const status = 200;
+    store.setState({ isLoading, status, data: [] });
+    try {
+        const response = await ProductService.findData(query);
+        const data = response.data;
+        let result = data.result;
+        const isLoading = false;
+        const lastPage = false;
+        const status = data.status;
+        store.setState({header: response.headers, isLoading, status, lastPage });
+        return result
+    } catch (error) {
+        const status = error.response ? error.response.status : '';
+        const message = error.response ? error.response.data.message : '';
+        const isLoading = false;
+        store.setState({ isLoading, status, message });
+        return false
+    }
+};
 export const store = async (store, value) => {
     const isLoading = !store.state.isLoading;
     const status = 200;
