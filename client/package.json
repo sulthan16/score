@@ -15,6 +15,7 @@
     "axios": "^0.19.0",
     "clsx": "latest",
     "env-cmd": "^10.0.1",
+    "pdfmake": "^0.1.60",
     "react": "latest",
     "react-confirm": "^0.1.18",
     "react-dom": "latest",

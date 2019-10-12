@@ -15,11 +15,15 @@ const useStyles = makeStyles(theme => ({
     nested: {
         paddingLeft: theme.spacing(4),
     },
+    gutters: {
+        paddingLeft: "23px !important",
+        paddingRight: "23px !important",
+    }
 }));
 
 function MainListItems(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const [openSettings, setOpenSettings] = React.useState(false);
     const handleClick = () => {
         setOpen(!open);
@@ -29,13 +33,13 @@ function MainListItems(props) {
     }
 
     return (<div>
-        <ListItem button selected={'/cashier' === props.path} onClick={() => history.push('/cashier')}>
+        <ListItem button className={classes.gutters} selected={'/cashier' === props.path} onClick={() => history.push('/cashier')}>
             <ListItemIcon>
                 <ShoppingCart />
             </ListItemIcon>
             <ListItemText primary="Cashier" />
         </ListItem>
-        <ListItem button onClick={handleClick}>
+        <ListItem button className={classes.gutters} onClick={handleClick}>
             <ListItemIcon>
                 <Inbox />
             </ListItemIcon>
@@ -44,7 +48,7 @@ function MainListItems(props) {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <ListItem button className={classes.nested} selected={'/all-items' === props.path}
+                <ListItem button className={classes.gutters} selected={'/all-items' === props.path}
                     onClick={() => history.push('/all-items')} >
                         <ListItemIcon>
                             <MenuBook />
@@ -53,7 +57,7 @@ function MainListItems(props) {
                 </ListItem>
                 <ListItem button 
                     onClick={() => history.push('/categories')}
-                    className={classes.nested} selected={'/categories' === props.path}>
+                    className={classes.gutters} selected={'/categories' === props.path}>
                     <ListItemIcon>
                         <Category />
                     </ListItemIcon>
@@ -62,7 +66,7 @@ function MainListItems(props) {
             </List>
         </Collapse>
 
-        <ListItem button onClick={handleClickSettings}>
+        <ListItem button className={classes.gutters} onClick={handleClickSettings}>
             <ListItemIcon>
                 <SettingsApplications />
             </ListItemIcon>
@@ -71,13 +75,13 @@ function MainListItems(props) {
         </ListItem>
         <Collapse in={openSettings} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
+                <ListItem button className={classes.gutters}>
                     <ListItemIcon>
                         <SupervisedUserCircle />
                     </ListItemIcon>
                     <ListItemText primary="Pengguna" />
                 </ListItem>
-                <ListItem button className={classes.nested}>
+                <ListItem button className={classes.gutters}>
                     <ListItemIcon>
                         <ControlCamera />
                     </ListItemIcon>
