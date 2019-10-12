@@ -76,19 +76,38 @@ function Cashier(props) {
     const [loading, setLoading] = React.useState(false);
     const [componentWillMount] = React.useState(false);
     const [state, setState] = React.useState({
-        formData: { jumlah: 1, product: '' }
+        formData: { jumlah: 1, product: '', barcode: '' }
     });
     const [shoppingCart, setShoppingCart] = React.useState({ product: [] });
     const [success, setSuccess] = React.useState(false);
     const timer = React.useRef();
+    const autoFocus = React.useRef(null);
 
     React.useEffect(() => {
         productActions.get()
+        autoFocus.current.focus();
     }, [componentWillMount, productActions]);
 
     const buttonClassname = clsx({
         [classes.buttonSuccess]: success,
     });
+
+    const hitEnter = (event) => {
+        event.preventDefault();
+        findProductByBarcode(state.formData);
+    }
+
+    const findProductByBarcode = async (value) => {
+        const { formData } = state;
+        const response = await productActions.findProduct(value);
+        if (response) {
+            formData['barcode'] = '';
+            setState({ formData });
+        } else {
+            formData['barcode'] = '';
+            setState({ formData });
+        }
+    }
 
     const handleChange = (event) => {
         const { formData } = state;
@@ -174,6 +193,10 @@ function Cashier(props) {
             <React.Fragment>
                 <Paper className={classes.paper}>
                     <Title>Cashier</Title>
+                    <form onSubmit={(e) => { hitEnter(e) }}>
+                        <input ref={autoFocus} type="text" name="barcode" value={state.formData.barcode} onChange={handleChange} />
+                    </form>
+
                 </Paper>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={4}>

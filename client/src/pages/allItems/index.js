@@ -12,6 +12,7 @@ import { confirm } from 'components/confirmationDialog';
 import Title from 'components/title';
 import productStore from './store';
 import { submitForm } from './containers/form';
+import { showDetail } from './containers/detail';
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: theme.spacing(2),
@@ -40,17 +41,20 @@ function AllItems(props) {
     const handleProductActions = (value) => {
         if (value) {
             submitForm('Edit Katalog', value).then(
-                (onProcess) => { },
+                (onProcess) => {setComponentWillMount(!componentWillMount); },
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
-        }else {
+        } else {
             submitForm('Tambah Katalog', value).then(
-                (onProcess) => { },
+                (onProcess) => { setComponentWillMount(!componentWillMount);  },
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
         }
     }
-     const handleDelete = (value) => {
+    const handleDetail = (value) => {
+        showDetail("Detail Katalog");
+    };
+    const handleDelete = (value) => {
         confirm("Delete", "Are you sure to Delete ?").then(
             async (onProcess) => {
                 await productActions.deleted(value)
@@ -79,7 +83,7 @@ function AllItems(props) {
                     <GridList cellHeight={200} className={classes.gridList} cols={3}>
                         {productState.data.map((tile, index) => (
                             <GridListTile key={index}>
-                                <img src={tile.images} alt={tile.title} />
+                                <img src={tile.thumb} alt={tile.title} className="detail-katalog" onClick={() => { handleDetail(tile) }} />
                                 <GridListTileBar
                                     title={tile.title}
                                     subtitle={`stock:${tile.stock} | category: ${tile.categoryTitle}`}
@@ -91,7 +95,7 @@ function AllItems(props) {
                                                 </IconButton>
                                             </Tooltip>
                                             <Tooltip title="Delete" aria-label="delete">
-                                                <IconButton aria-label={`info about ${tile.title}`} onClick={()=>handleDelete(tile)} className={classes.icon}>
+                                                <IconButton aria-label={`info about ${tile.title}`} onClick={() => handleDelete(tile)} className={classes.icon}>
                                                     <Delete />
                                                 </IconButton>
                                             </Tooltip>

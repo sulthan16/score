@@ -31,7 +31,7 @@ function Upload(props) {
                             form.append('file', file);
                             return new Promise(resolve => {
                                 AppService.uploadImage(form).then(response => {
-                                    let data = response.data.image_url;
+                                    let data = response.data.result;
 
                                     if (appState.imageUpload.length) {
                                         appState.imageUpload.map((value, key) => {

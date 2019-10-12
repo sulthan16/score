@@ -61,7 +61,6 @@ function CropImageDialog(props) {
     };
 
     const onCropComplete = async (crop, pixelCrop) => {
-        console.log(crop, pixelCrop);
         const canvasRef = imagePreviewCanvasRef.current;
         const fixedImage = await image64toCanvasRef(canvasRef, src, crop, dataImage.name, extractImage);
         setFixImage64(fixedImage);
@@ -83,7 +82,6 @@ function CropImageDialog(props) {
 
             // file to be uploaded
             const myNewCroppedFile = base64StringtoFile(imageData64, dataImage.name)
-            console.log(myNewCroppedFile);
             // download file
             // downloadBase64File(imageData64, dataImage.name);
             proceed(myNewCroppedFile);
