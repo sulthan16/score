@@ -9,8 +9,10 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import CustomizedDialogs from 'components/formDialog';
 import { confirm } from 'components/confirmationDialog';
 import { confirmable, createConfirmation } from "react-confirm";
-import Upload from 'components/imageUpload';
+import SingleUpload from 'components/imageUpload/imageUpload';
 import appStore from 'store/App';
+import categoryStore from '../store';
+import AppService from 'services/app';
 
 const styles = theme => ({
     header: {
@@ -29,9 +31,10 @@ const styles = theme => ({
 });
 
 function Form(props) {
-    const { classes, width, data, cancel } = props;
+    const { classes, width, data, proceed } = props;
     const [openDialog, setOpenDialog] = React.useState(true);
     const [appState, appActions] = appStore();
+    const [, categoryActions] = categoryStore();
     const [state, setState] = React.useState({
         formData: {
             id: '',
@@ -46,12 +49,17 @@ function Form(props) {
                 formData: {
                     id: data.id,
                     title: data.title,
-                    thumb: [data.thumb]
+                    thumb: data.thumb
                 }
             })
         }
     }, [componentWillMount, setState, data])
 
+    const removeImageUpload = (value) => {
+        const { formData } = state;
+        formData['thumb'] = '';
+        setState({ formData });
+    }
 
     const handleCloseDialog = () => {
         if (appState.imageUpload) {
@@ -67,16 +75,17 @@ function Form(props) {
     }
 
     const handleSubmit = (event) => {
-        // var query = {
-        //     num: 10,
-        //     cursor: '',
-        //     position: ''
-        // }
         confirm("Submit", "Are you sure to Submit ?").then(
             (onProcess) => {
-                // facilityActions.onUpdateFacility(state.formData, query);
-                handleCloseDialog();
-                cancel();
+                if (data) {
+                    categoryActions.put(state.formData);
+                    handleCloseDialog();
+                    proceed();
+                } else {
+                    categoryActions.store(state.formData);
+                    handleCloseDialog();
+                    proceed();
+                }
             }
         );
     }
@@ -112,7 +121,26 @@ function Form(props) {
                                     Gambar</Typography>
                             </Grid>
                             <Grid container justify="center" item xs={11} style={{ paddingBottom: 30 }}>
-                                <Upload inputValue={state.formData.thumb} />
+                                <SingleUpload
+                                    onUpload={(file) => {
+                                        const form = new FormData();
+                                        form.append('file', file);
+                                        return new Promise(resolve => {
+                                            AppService.uploadImage(form).then(response => {
+                                                let data = response.data.result;
+                                                const { formData } = state;
+                                                formData['thumb'] = data;
+                                                setState({ formData });
+                                                resolve(true);
+                                            }).catch(error => {
+                                                console.log(error);
+                                                resolve(false);
+                                            });
+                                        });
+                                    }}
+                                    imageExist={state.formData.thumb}
+                                    onRemove={(value) => removeImageUpload(value)}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>

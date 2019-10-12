@@ -34,10 +34,10 @@ const styles = theme => ({
 });
 
 function Form(props) {
-    const { classes, width, data, cancel, proceed } = props;
+    const { classes, width, data, proceed } = props;
     const [openDialog, setOpenDialog] = React.useState(true);
     const [appState, appActions] = appStore();
-    const [productState, productActions] = productStore();
+    const [, productActions] = productStore();
     const [categoryState, categoryActions] = categoryStore();
     const [state, setState] = React.useState({
         formData: {
@@ -70,7 +70,11 @@ function Form(props) {
                     barcode: data.barcode,
                     type: data.type,
                     discon: data.discon,
-                    CategoryId: { value: data.CategoryId ,label:data.categoryTitle }
+                    CategoryId: {
+                        value: data.CategoryId, label: data.categoryTitle, data: {
+                            id: data.CategoryId, title: data.categoryTitle
+                        }
+                    }
                 }
             })
         }
@@ -100,6 +104,9 @@ function Form(props) {
         confirm("Submit", "Are you sure to Submit ?").then(
             (onProcess) => {
                 if (data) {
+                    formData['images'] = appState.imageUpload;
+                    setState({ formData });
+                    productActions.put(state.formData);
                     handleCloseDialog();
                     proceed();
                 } else {

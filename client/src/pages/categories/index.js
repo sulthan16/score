@@ -40,12 +40,12 @@ function Categories(props) {
     const handleCategoriesActions = (value) => {
         if (value) {
             submitForm('Edit Kategori Barang', value).then(
-                (onProcess) => { },
+                (onProcess) => {  setComponentWillMount(!componentWillMount);},
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
         } else {
             submitForm('Tambah Kategori Barang', value).then(
-                (onProcess) => { },
+                (onProcess) => { setComponentWillMount(!componentWillMount); },
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
         }

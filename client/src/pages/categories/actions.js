@@ -19,6 +19,45 @@ export const get = async (store, query) => {
         const isLoading = false;
         store.setState({ isLoading, status, message });
     }
+}; export const store = async (store, value) => {
+    const isLoading = !store.state.isLoading;
+    const status = 200;
+    store.setState({ isLoading, status });
+    try {
+        const response = await CategoryService.storeData(value);
+        const data = response.data;
+        const isLoading = false;
+        const status = data.message;
+        store.setState({ isLoading, status });
+        return data
+    } catch (error) {
+        const status = error.response ? error.response.status : '';
+        const message = 'Error';
+        const isLoading = false;
+        notifUtils('Data Berhasil Di Tambahkan', 'success');
+        store.setState({ isLoading, status, message });
+        return message
+    }
+};
+export const put = async (store, value) => {
+    const isLoading = !store.state.isLoading;
+    const status = 200;
+    store.setState({ isLoading, status });
+    try {
+        const response = await CategoryService.putData(value);
+        const data = response.data;
+        const isLoading = false;
+        const status = data.message;
+        notifUtils('Data Berhasil Di Rubah', 'success');
+        store.setState({ isLoading, status });
+        return data
+    } catch (error) {
+        const status = error.response ? error.response.status : '';
+        const message = 'Error';
+        const isLoading = false;
+        store.setState({ isLoading, status, message });
+        return message
+    }
 };
 export const deleted = async (store, query) => {
     const isLoading = true;
