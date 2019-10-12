@@ -13,7 +13,7 @@ import Title from 'components/title';
 import productStore from 'pages/allItems/store';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { green, red } from '@material-ui/core/colors';
-import SelectValidate from 'components/selectValidate';
+// import SelectValidate from 'components/selectValidate';
 import SnackBars from 'components/snackbars';
 
 const useStyles = makeStyles(theme => ({
@@ -73,17 +73,16 @@ const useStyles = makeStyles(theme => ({
 }));
 function Cashier(props) {
     const classes = useStyles();
-    const [productState, productActions] = productStore();
+    const [, productActions] = productStore();
     const [loading, setLoading] = React.useState(false);
     const [componentWillMount] = React.useState(false);
     const [openSnackBar, setOpenSnackBar] = React.useState(false);
     const [state, setState] = React.useState({
         formData: { jumlah: 1, product: '', barcode: '' }
     });
-    const [shoppingCart, setShoppingCart] = React.useState({ product: [] });
+    const [shoppingCart, setShoppingCart] = React.useState([]);
     const [success, setSuccess] = React.useState(false);
     const timer = React.useRef();
-    const autoFocus = React.useRef(null);
 
     React.useEffect(() => {
         productActions.get()
@@ -106,12 +105,14 @@ function Cashier(props) {
             handleInputProductChange(event)
         }
     }
-    const handleChangeProduct = (data) => {
-        const { formData } = state;
-        formData['product'] = data;
-        setState({ formData });
-    }
+    // const handleChangeProduct = (data) => {
+    //     const { formData } = state;
+    //     formData['product'] = data;
+    //     setState({ formData });
+    // }
+
     const handleInputProductChange = async (event) => {
+        event.persist()
         if (event.target.value !== '') {
             var query = {
                 num: '200',
@@ -132,14 +133,10 @@ function Cashier(props) {
             setLoading(true);
             timer.current = setTimeout(() => {
                 const { formData } = state;
-                const { product } = shoppingCart;
                 if (res) {
                     res.jumlah = 1;
                     res.total = res.sellPrice;
-                    product.push(res);
-                    setShoppingCart({
-                        product
-                    });
+                    setShoppingCart(oldArray => [...oldArray, res]);
                     formData['barcode'] = '';
                     setState({ formData });
                     setSuccess(true);
@@ -172,17 +169,16 @@ function Cashier(props) {
     }
     const total = () => {
         let total = 0;
-        shoppingCart.product.map(product => {
+        shoppingCart.map(product => {
             return total += product.total
         })
         return formatRupiah(total, 'Rp.');
     }
     const deleteCart = (val) => {
-        setShoppingCart(oldArray => oldArray.product.filter(item => item.barang.data.id !== val.id))
+        setShoppingCart(oldArray => oldArray.filter(item => item.id !== val.id));
     }
     const endOftransaction = () => {
-        console.log(shoppingCart);
-        setShoppingCart({ product: [] });
+        setShoppingCart([]);
     }
     // const getSearchProduct = (productState && productState.data.map(product =>
     //     ({ value: product.id, label: product.title, data: product })));
@@ -257,20 +253,20 @@ function Cashier(props) {
                             </ValidatorForm>
                         </Paper>
                     </Grid>
-                    {shoppingCart.product.length > 0 && (<Grid item xs={8}>
+                    {shoppingCart.length > 0 && (<Grid item xs={8}>
                         <Paper>
                             <List className={classes.crot} subheader={<li />}>
                                 <li className={classes.listSection}>
                                     <ul className={classes.ul}>
-                                        <ListSubheader>{`Isi Keranjang Belanja ${shoppingCart.product.length}`}</ListSubheader>
-                                        {shoppingCart.product.map((item, key) => (
+                                        <ListSubheader>{`Isi Keranjang Belanja ${shoppingCart.length}`}</ListSubheader>
+                                        {shoppingCart.map((item, key) => (
                                             <ListItem key={`item-${key}`}>
                                                 <ListItemText
                                                     primary={`${item.title}`}
                                                     secondary={`jumlah:${item.jumlah} | harga:${formatRupiah(item.total, 'Rp. ')}`}
                                                 />
                                                 <ListItemSecondaryAction>
-                                                    <IconButton edge="end" aria-label="delete" onClick={() => deleteCart(item.barang.data)}>
+                                                    <IconButton edge="end" aria-label="delete" onClick={() => deleteCart(item)}>
                                                         <Delete />
                                                     </IconButton>
                                                 </ListItemSecondaryAction>
