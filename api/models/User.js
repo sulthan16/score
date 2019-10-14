@@ -21,8 +21,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             unique: true
         },
+        emailVerification: DataTypes.ENUM('1', '0'),
         password: DataTypes.STRING,
-        token: DataTypes.STRING
+        token: DataTypes.TEXT,
+        fcnTokenWeb: DataTypes.TEXT,
+        fcnTokenMobile: DataTypes.TEXT
     }, {
         hooks: {
             beforeSave: hashPassword
@@ -31,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
 
     User.prototype.comparePassword = function (password) {
         return bcrypt.compareAsync(password, this.password)
+    }
+    User.associate = function (models) {
+        User.belongsTo(models.Company);
+        User.belongsTo(models.Role);
     }
 
     return User

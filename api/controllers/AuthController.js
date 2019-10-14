@@ -1,8 +1,8 @@
-const { User } = require('../models')
+const { User, RoleAccess, Module, Feature } = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../../config/server')
 
-function jwtSignUser (user) {
+function jwtSignUser(user) {
   const ONE_WEEK = 60 * 60 * 24 * 7
   return jwt.sign(user, config.authentication.jwtSecret, {
     expiresIn: ONE_WEEK
@@ -10,7 +10,7 @@ function jwtSignUser (user) {
 }
 
 module.exports = {
-  async login (req, res) {
+  async login(req, res) {
     try {
       const { email, password } = req.body
       const user = await User.findOne({
@@ -35,22 +35,34 @@ module.exports = {
 
       const userJson = user.toJSON();
       const jwt = jwtSignUser(userJson);
-      
+
+      let roleAccess = null;
+      if (userJson.RoleId) {
+        roleAccess = await RoleAccess.findAll({
+          where: {
+            RoleId: userJson.RoleId
+          },
+          include: [{ model: Module }, { model: Feature }],
+        })
+      }
+
       user.update({
         token: jwt,
         updatedAt: new Date,
       });
 
-      res.send({
+      res.status(200).send({
         user: {
           email: userJson.email,
           id: userJson.id,
+          role: roleAccess,
           createdAt: userJson.createdAt,
           updatedAt: userJson.updatedAt
         },
         token: jwt
       })
     } catch (err) {
+      console.log(err)
       res.status(500).send({
         error: 'Error occured login!'
       })

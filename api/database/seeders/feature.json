@@ -1,0 +1,12 @@
+[
+    {
+        "name": "cashier",
+        "path": "/Cashier",
+        "ModuleId": 1
+    },
+    {
+        "name": "product",
+        "path": "/all-items",
+        "ModuleId": 1
+    }
+]
