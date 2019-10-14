@@ -46,11 +46,6 @@ module.exports = {
         })
       }
 
-      user.update({
-        token: jwt,
-        updatedAt: new Date,
-      });
-
       res.status(200).send({
         user: {
           email: userJson.email,

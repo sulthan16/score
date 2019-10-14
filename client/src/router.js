@@ -25,11 +25,11 @@ function AppRouter() {
     <Router history={history}>
       <Switch>
         <Route exact name="Login" path="/login" component={login} />
-        <Route path="/cashier" name="Root" exact component={LoadableComponent(() => import('pages/cashier'))} />
+        <Route path="/cashier" name="cashier" exact component={LoadableComponent(() => import('pages/cashier'))} />
         <Route path="/" name="Root" exact render={clearLocalStorage} />
         {/* <PrivateRoute exact path='/task/:id' name="Task" component={LoadableComponent(() => import('pages/task'))} /> */}
         <PrivateRoute exact path='/categories' name="categories" component={LoadableComponent(() => import('pages/categories'))} />
-        <PrivateRoute exact path='/all-items' name="categories" component={LoadableComponent(() => import('pages/allItems'))} />
+        <PrivateRoute exact path='/all-items' name="product" component={LoadableComponent(() => import('pages/allItems'))} />
       </Switch>
     </Router>
   );

@@ -75,6 +75,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 function Cashier(props) {
+	debugger
     const classes = useStyles();
     const [, productActions] = productStore();
     const [loading, setLoading] = React.useState(false);
