@@ -31,13 +31,14 @@ module.exports = (sequelize, DataTypes) => {
             beforeSave: hashPassword
         }
     })
-
-    User.prototype.comparePassword = function (password) {
-        return bcrypt.compareAsync(password, this.password)
-    }
+    
     User.associate = function (models) {
         User.belongsTo(models.Company);
         User.belongsTo(models.Role);
+    }
+
+    User.prototype.comparePassword = function (password) {
+        return bcrypt.compareAsync(password, this.password)
     }
 
     return User
