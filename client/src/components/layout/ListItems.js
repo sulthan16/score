@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    ShoppingCart, Menu, Inbox, ControlCamera,
-    ExpandLess, ExpandMore, Category, SettingsApplications, SupervisedUserCircle
+    ShoppingCart, Menu
 } from '@material-ui/icons';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import history from 'routes/history';
