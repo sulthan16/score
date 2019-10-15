@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    ShoppingCart, MenuBook, Inbox, ControlCamera,
+    ShoppingCart, Menu, Inbox, ControlCamera,
     ExpandLess, ExpandMore, Category, SettingsApplications, SupervisedUserCircle
 } from '@material-ui/icons';
-import { Collapse, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import history from 'routes/history';
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,72 +23,18 @@ const useStyles = makeStyles(theme => ({
 
 function MainListItems(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const [openSettings, setOpenSettings] = React.useState(false);
-    const handleClick = () => {
-        setOpen(!open);
-    }
-    const handleClickSettings = () => {
-        setOpenSettings(!openSettings);
-    }
-
+    const user = JSON.parse(localStorage.getItem('user'));
+    const { role } = user || [];
     return (<div>
-        <ListItem button className={classes.gutters} selected={'/cashier' === props.path} onClick={() => history.push('/cashier')}>
-            <ListItemIcon>
-                <ShoppingCart />
-            </ListItemIcon>
-            <ListItemText primary="Cashier" />
-        </ListItem>
-        <ListItem button className={classes.gutters} onClick={handleClick}>
-            <ListItemIcon>
-                <Inbox />
-            </ListItemIcon>
-            <ListItemText primary="Barang" />
-            {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                <ListItem button className={classes.gutters} selected={'/all-items' === props.path}
-                    onClick={() => history.push('/all-items')} >
-                        <ListItemIcon>
-                            <MenuBook />
-                        </ListItemIcon>
-                        <ListItemText primary="List Barang" />
-                </ListItem>
-                <ListItem button 
-                    onClick={() => history.push('/categories')}
-                    className={classes.gutters} selected={'/categories' === props.path}>
-                    <ListItemIcon>
-                        <Category />
-                    </ListItemIcon>
-                    <ListItemText primary="Kategori Barang" />
-                </ListItem>
-            </List>
-        </Collapse>
-
-        <ListItem button className={classes.gutters} onClick={handleClickSettings}>
-            <ListItemIcon>
-                <SettingsApplications />
-            </ListItemIcon>
-            <ListItemText primary="Pengaturan" />
-            {openSettings ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={openSettings} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                <ListItem button className={classes.gutters}>
-                    <ListItemIcon>
-                        <SupervisedUserCircle />
-                    </ListItemIcon>
-                    <ListItemText primary="Pengguna" />
-                </ListItem>
-                <ListItem button className={classes.gutters}>
-                    <ListItemIcon>
-                        <ControlCamera />
-                    </ListItemIcon>
-                    <ListItemText primary="Hak Akses" />
-                </ListItem>
-            </List>
-        </Collapse>
+        {role.map((value, key) => (
+            <ListItem key={key} button className={classes.gutters} selected={value.Feature.path === props.path} onClick={() => history.push(value.Feature.path)}>
+                <ListItemIcon>
+                   {value.Feature.name === 'cashier' && <ShoppingCart />}
+                   {value.Feature.name === 'product' && <Menu />}
+                </ListItemIcon>
+                <ListItemText primary={value.Feature.name} />
+            </ListItem>
+        ))}
     </div>);
 };
 
