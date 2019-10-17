@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     ShoppingCart, Menu, PeopleAlt, Settings
 } from '@material-ui/icons';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
 import history from 'routes/history';
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,18 +23,28 @@ const useStyles = makeStyles(theme => ({
 function MainListItems(props) {
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('user'));
-    const { role } = user || [];
+    const { menu } = user || [];
+
     return (<div>
-        {role.map((value, key) => (
-            <ListItem key={key} button className={classes.gutters} selected={value.Feature.path === props.path} onClick={() => history.push(value.Feature.path)}>
-                <ListItemIcon>
-                   {(value.Feature.name === 'cashier' && <ShoppingCart /> )||
-                   (value.Feature.name === 'product' && <Menu />) ||  (value.Feature.name === 'user' && <PeopleAlt />) || 
-                   (value.Feature.name === 'roles' && <Settings />)
-                    }
-                </ListItemIcon>
-                <ListItemText primary={value.Feature.name} />
-            </ListItem>
+        {menu.map((value, key) => (
+            <React.Fragment key={key}>
+                <ListSubheader component="div" id="nested-list-subheader">
+                    {value.name}
+                </ListSubheader>
+                {value.menu.map((item, index) =>
+                    (<ListItem key={index} button className={classes.gutters} selected={item.path === props.path} onClick={() => history.push(item.path)}>
+                        <ListItemIcon>
+                            {(item.name === 'cashier' && <ShoppingCart />) ||
+                                (item.name === 'product' && <Menu />) || (item.name === 'user' && <PeopleAlt />) ||
+                                (item.name === 'roles' && <Settings />)
+                            }
+                        </ListItemIcon>
+                        <ListItemText primary={item.name} />
+                    </ListItem>
+                    )
+                )}
+
+            </React.Fragment>
         ))}
     </div>);
 };

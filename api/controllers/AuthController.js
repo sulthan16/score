@@ -1,6 +1,7 @@
 const { User, RoleAccess, Module, Feature } = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../../config/server')
+const _lo = require('lodash');
 
 function jwtSignUser(user) {
   const ONE_WEEK = 60 * 60 * 24 * 7
@@ -42,15 +43,49 @@ module.exports = {
           where: {
             RoleId: userJson.RoleId
           },
-          include: [{ model: Module }, { model: Feature }],
+          include: [{ model: Feature, include: [Module] }],
         })
+      }
+      let menuTitle = [];
+      let menuChild = [];
+      let c = [];
+      roleAccess.map(value => {
+        menuTitle.push({ id: value.Feature.Module.id, name: value.Feature.Module.name });
+        menuChild.push({
+          id: value.Feature.id,
+          name: value.Feature.name,
+          show: value.show === '1',
+          read: value.read === '1',
+          put: value.put === '1',
+          delete: value.delete === '1',
+          create: value.create === '1',
+          path: value.Feature.path, ModuleId: value.Feature.ModuleId
+        });
+      })
+      if (menuChild.length > 0) {
+        c = _lo.uniqBy(menuTitle, 'id');
+        let d = _lo.map(c, function (o) {
+          let e = _lo.filter(menuChild, function (item) {
+            return o.id === item.ModuleId;
+          });
+          return e;
+        });
+        c.map((item) => {
+          _lo.forEach(d, function (value, key) {
+            let f = value[key].id;
+            if (item.id === f) {
+              item.menu = value
+            }
+          });
+          return item
+        });
       }
 
       res.status(200).send({
         user: {
           email: userJson.email,
           id: userJson.id,
-          role: roleAccess,
+          menu: c.reverse(),
           createdAt: userJson.createdAt,
           updatedAt: userJson.updatedAt
         },

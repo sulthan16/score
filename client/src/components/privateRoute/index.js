@@ -21,22 +21,25 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
         data: []
     }
     if (user) {
-        user.role.map(role => {
-            if (role.Feature.name === name) {
-                if (role.show === '1') {
-                    allowAccess = {
-                        show: role.show === '1',
-                        name: role.Feature.name,
-                        read: role.read === '1',
-                        create: role.create === '1',
-                        delete: role.delete === '1',
-                        put: role.put === '1',
-                        data: role
+        user.menu.map(item => {
+            item.menu.map(value => {
+                if (value.name === name) {
+                    if (value.show) {
+                        allowAccess = {
+                            show: value.show,
+                            name: value.name,
+                            read: value.read,
+                            create: value.create,
+                            delete: value.delete,
+                            put: value.put,
+                            data: value
+                        }
                     }
+                    return allowAccess
                 }
                 return allowAccess
-            }
-            return allowAccess
+            })
+
         })
     } else {
         clearLocalStorage();
