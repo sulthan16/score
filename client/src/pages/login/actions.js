@@ -14,8 +14,8 @@ export const onSubmitLogin = async (store, email, password, token) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(userData));
         store.setState({ userData, isLoading, status });
-        notifUtils('Successfully Updated Facility', 'success');
-        history.push('/cashier');
+        notifUtils('Login Successfully', 'success');
+        history.push('/Cashier');
     } catch(error) {
         const status = error.response ? error.response.status : '';
         const message = error.response ? error.response.data.message : '';

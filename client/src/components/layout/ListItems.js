@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    ShoppingCart, Menu
+    ShoppingCart, Menu, PeopleAlt, Settings
 } from '@material-ui/icons';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import history from 'routes/history';
@@ -28,8 +28,10 @@ function MainListItems(props) {
         {role.map((value, key) => (
             <ListItem key={key} button className={classes.gutters} selected={value.Feature.path === props.path} onClick={() => history.push(value.Feature.path)}>
                 <ListItemIcon>
-                   {value.Feature.name === 'cashier' && <ShoppingCart />}
-                   {value.Feature.name === 'product' && <Menu />}
+                   {(value.Feature.name === 'cashier' && <ShoppingCart /> )||
+                   (value.Feature.name === 'product' && <Menu />) ||  (value.Feature.name === 'user' && <PeopleAlt />) || 
+                   (value.Feature.name === 'roles' && <Settings />)
+                    }
                 </ListItemIcon>
                 <ListItemText primary={value.Feature.name} />
             </ListItem>

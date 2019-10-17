@@ -16,7 +16,73 @@
         "put": 1,
         "delete": 1,
         "ModuleId": 1,
+        "RoleId": 1,
+        "FeatureId": 2
+    },{
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 1,
+        "FeatureId": 3
+    },{
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 1,
+        "FeatureId": 4
+    },
+    {
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
         "RoleId": 2,
+        "FeatureId": 1
+    },
+    {
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 2,
+        "FeatureId": 2
+    },{
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 2,
+        "FeatureId": 3
+    },{
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 2,
+        "FeatureId": 4
+    },
+    {
+        "show": 1,
+        "read": 1,
+        "create": 1,
+        "put": 1,
+        "delete": 1,
+        "ModuleId": 1,
+        "RoleId": 3,
         "FeatureId": 1
     }
 ]

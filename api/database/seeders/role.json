@@ -14,5 +14,13 @@
     "FeatureId": 1,
     "level": 1,
     "notificationLevel": 1
+  },
+  {
+    "name": "Cashier",
+    "CompanyId": 1,
+    "ModuleId": 1,
+    "FeatureId": 1,
+    "level": 1,
+    "notificationLevel": 1
   }
 ]

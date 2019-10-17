@@ -8,5 +8,15 @@
         "name": "product",
         "path": "/all-items",
         "ModuleId": 1
+    },
+    {
+        "name": "user",
+        "path": "/user",
+        "ModuleId": 2
+    },
+    {
+        "name": "roles",
+        "path": "/roles",
+        "ModuleId": 2
     }
 ]

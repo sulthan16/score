@@ -4,5 +4,9 @@ module.exports = (sequelize, DataTypes) => {
         thumb: DataTypes.TEXT
     })
 
+    Category.associate = function (models) {
+        Category.belongsTo(models.Company);
+    }
+
     return Category
 }

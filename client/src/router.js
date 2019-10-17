@@ -30,6 +30,8 @@ function AppRouter() {
         {/* <PrivateRoute exact path='/task/:id' name="Task" component={LoadableComponent(() => import('pages/task'))} /> */}
         <PrivateRoute exact path='/categories' name="categories" component={LoadableComponent(() => import('pages/categories'))} />
         <PrivateRoute exact path='/all-items' name="product" component={LoadableComponent(() => import('pages/allItems'))} />
+        <PrivateRoute exact path='/roles' name="roles" component={LoadableComponent(() => import('pages/roles'))} />
+        <PrivateRoute exact path='/user' name="user" component={LoadableComponent(() => import('pages/users'))} />
       </Switch>
     </Router>
   );
