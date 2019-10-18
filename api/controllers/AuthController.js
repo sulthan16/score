@@ -72,20 +72,27 @@ module.exports = {
         });
         c.map((item) => {
           _lo.forEach(d, function (value, key) {
-            let f = value[key].id;
+            let f = value[key].ModuleId;
             if (item.id === f) {
               item.menu = value
             }
           });
           return item
         });
+        c.map(item => {
+          if (item.menu === undefined) {
+            c.filter(el => el.id !== item.id);
+          }
+          return item
+        })
+        c = _lo.sortBy(c, [function (o) { return o.id; }]);
       }
 
       res.status(200).send({
         user: {
           email: userJson.email,
           id: userJson.id,
-          menu: c.reverse(),
+          menu: c,
           createdAt: userJson.createdAt,
           updatedAt: userJson.updatedAt
         },
