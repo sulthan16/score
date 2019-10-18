@@ -5,9 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Popper from '@material-ui/core/Popper';
-import Fade from '@material-ui/core/Fade';
-import Paper from '@material-ui/core/Paper';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -121,15 +120,20 @@ export default function Dashboard(props) {
   const { children } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  
-  
 
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    history.push('/login');
+  }
 
   return (
     <div className={classes.root}>
@@ -152,18 +156,22 @@ export default function Dashboard(props) {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit"  onClick={handleClick}>
+          <IconButton color="inherit" onClick={handleClick}>
             <AccountCircleIcon />
           </IconButton>
-          <Popper id={id} open={open} anchorEl={anchorEl} transition>
-            {({ TransitionProps }) => (
-              <Fade {...TransitionProps} timeout={350}>
-                <Paper>
-                  <Typography className={classes.typography}>The content of the Popper.</Typography>
-                </Paper>
-              </Fade>
-            )}
-          </Popper>
+          <Menu
+            id="simple-menu"
+            elevation={0}
+            getContentAnchorEl={null}
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem>Profile</MenuItem>
+            <MenuItem >My account</MenuItem>
+            <MenuItem onClick={clearLocalStorage}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Drawer

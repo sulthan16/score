@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { RoleAccess } = require('../models');
 module.exports = {
     async get(req, res) {
         try {
@@ -8,7 +8,7 @@ module.exports = {
             const search = (req.query.search)
                 ? req.query.search : ''
 
-            const categories = await Category.findAll({
+            const categories = await RoleAccess.findAll({
                 limit: num,
                 // where: {
                 //     $or: [
@@ -30,11 +30,11 @@ module.exports = {
     },
     async store(req, res) {
         try {
-            const category = await Category.create({
+            const roleAccess = await RoleAccess.create({
                 title: req.body.title,
                 thumb: req.body.thumb
             });
-            res.status(200).send({ result: category, status: 200 });
+            res.status(200).send({ result: roleAccess, status: 200 });
         } catch (err) {
             res.status(500).send({
                 error: 'error while inserting data products APIs'
@@ -43,7 +43,7 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            const category = await Category.update({
+            const roleAccess = await RoleAccess.update({
                 title: req.body.title,
                 thumb: req.body.thumb
             }, {
@@ -51,7 +51,7 @@ module.exports = {
                     id: req.params.id
                 }
             });
-            res.status(200).send({ result: category, status: 200 });
+            res.status(200).send({ result: roleAccess, status: 200 });
         } catch (err) {
             res.status(500).send({
                 error: 'error while inserting data products APIs'
@@ -60,12 +60,12 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            const { categoryId } = req.params
-            const category = await Category.findByPk(categoryId)
-            await category.destroy()
+            const { roleAccessId } = req.params
+            const roleAccess = await RoleAccess.findByPk(roleAccessId)
+            await RoleAccess.destroy()
             res.status(200).send({
                 status: 200,
-                result: category
+                result: roleAccess
             })
         } catch (err) {
             console.log(err);

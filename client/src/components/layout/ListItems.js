@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    ShoppingCart, Menu, PeopleAlt, Settings
+    ShoppingCart, Menu, PeopleAlt, Settings, Category
 } from '@material-ui/icons';
 import { ListItem, ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
 import history from 'routes/history';
@@ -32,11 +32,12 @@ function MainListItems(props) {
                     {value.name}
                 </ListSubheader>
                 {value.menu.map((item, index) =>
-                    (<ListItem key={index} button className={classes.gutters} selected={item.path === props.path} onClick={() => history.push(item.path)}>
+                    (item.menusAccess && <ListItem key={index} button className={classes.gutters} selected={item.path === props.path} onClick={() => history.push(item.path)}>
                         <ListItemIcon>
                             {(item.name === 'cashier' && <ShoppingCart />) ||
                                 (item.name === 'product' && <Menu />) || (item.name === 'user' && <PeopleAlt />) ||
-                                (item.name === 'roles' && <Settings />)
+                                (item.name === 'roles' && <Settings />) ||
+                                (item.name === 'categories' && <Category />)
                             }
                         </ListItemIcon>
                         <ListItemText primary={item.name} />

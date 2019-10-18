@@ -9,5 +9,11 @@
       "password":"admin",
       "CompanyId":1,
       "RoleId":2
+    },
+    {
+      "email":"cashier@izy.ai",
+      "password":"admin",
+      "CompanyId":1,
+      "RoleId":2
     }
   ]

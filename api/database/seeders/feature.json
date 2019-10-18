@@ -10,6 +10,11 @@
         "ModuleId": 1
     },
     {
+        "name": "categories",
+        "path": "/categories",
+        "ModuleId": 1
+    },
+    {
         "name": "user",
         "path": "/user",
         "ModuleId": 2

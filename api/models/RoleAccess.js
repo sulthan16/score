@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const RoleAccess = sequelize.define('RoleAccess', {
-        show: DataTypes.ENUM('1', '0'),
+        menusAccess: DataTypes.ENUM('1', '0'),
         read: DataTypes.ENUM('1', '0'),
         create: DataTypes.ENUM('1', '0'),
         put: DataTypes.ENUM('1', '0'),

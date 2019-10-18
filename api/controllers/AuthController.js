@@ -54,12 +54,13 @@ module.exports = {
         menuChild.push({
           id: value.Feature.id,
           name: value.Feature.name,
-          show: value.show === '1',
+          menusAccess: value.menusAccess === '1',
           read: value.read === '1',
           put: value.put === '1',
           delete: value.delete === '1',
           create: value.create === '1',
-          path: value.Feature.path, ModuleId: value.Feature.ModuleId
+          path: value.Feature.path,
+          ModuleId: value.Feature.ModuleId
         });
       })
       if (menuChild.length > 0) {
@@ -71,11 +72,13 @@ module.exports = {
           return e;
         });
         c.map((item) => {
-          _lo.forEach(d, function (value, key) {
-            let f = value[key].ModuleId;
-            if (item.id === f) {
-              item.menu = value
-            }
+          _lo.forEach(d, function (value) {
+            value.map(data => {
+              let f = data.ModuleId;
+              if (item.id === f) {
+                item.menu = value
+              }
+            })
           });
           return item
         });

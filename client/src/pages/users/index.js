@@ -1,18 +1,14 @@
 
 import React from 'react';
-import './AllItems.css';
+import './Users.css';
 import BaseLayout from 'components/layout';
 import {
-    Button, Paper, makeStyles, Grid,
-    GridList, GridListTile, GridListTileBar, IconButton, Tooltip
+    Button, makeStyles, Grid
 } from '@material-ui/core';
-import { Edit, Delete } from '@material-ui/icons';
-import InputSearch from 'components/inputSearch';
-import { confirm } from 'components/confirmationDialog';
-import Title from 'components/title';
+import { Edit} from '@material-ui/icons';
 import productStore from './store';
 import { submitForm } from './containers/form';
-import { showDetail } from './containers/detail';
+// import { showDetail } from './containers/detail';
 import Table from './containers/table';
 
 const useStyles = makeStyles(theme => ({
@@ -59,20 +55,9 @@ function AllItems(props) {
             );
         }
     }
-    const handleDetail = (value) => {
-        showDetail("Detail Katalog");
-    };
-    const handleDelete = (value) => {
-        confirm("Delete", "Are you sure to Delete ?").then(
-            async (onProcess) => {
-                await productActions.deleted(value)
-                setComponentWillMount(!componentWillMount);
-            },
-            (onCancel) => {
-                setComponentWillMount(!componentWillMount);
-            }
-        );
-    };
+    // const handleDetail = (value) => {
+    //     showDetail("Detail Katalog");
+    // };
     return (
         <BaseLayout>
             <React.Fragment>
@@ -101,7 +86,7 @@ function AllItems(props) {
                         actions={[
                             {
                                 icon: Edit,
-                                tooltip: 'Update Role',
+                                tooltip: 'Update',
                                 onClick: (event, rowData) => {
                                     handleProductActions(rowData);
                                 }

@@ -13,7 +13,7 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
     }
     let allowAccess = {
         name: '',
-        show: false,
+        menusAccess: false,
         read: false,
         create: false,
         delete: false,
@@ -25,9 +25,9 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
             if (item.menu) {
                 item.menu.map(value => {
                     if (value.name === name) {
-                        if (value.show) {
+                        if (value.menusAccess) {
                             allowAccess = {
-                                show: value.show,
+                                menusAccess: value.menusAccess,
                                 name: value.name,
                                 read: value.read,
                                 create: value.create,
@@ -43,7 +43,7 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
             } else {
                 allowAccess = {
                     name: '',
-                    show: false,
+                    menusAccess: false,
                     read: false,
                     create: false,
                     delete: false,
@@ -51,8 +51,7 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
                     data: []
                 }
             }
-
-
+            return allowAccess
         })
     } else {
         clearLocalStorage();
@@ -60,7 +59,7 @@ const PrivateRoute = ({ name, component: Component, ...rest }) => {
 
     return (
         <Route {...rest} render={(props) => (
-            allowAccess.show
+            allowAccess.menusAccess
                 ? <Component {...props} params={allowAccess} />
                 : clearLocalStorage()
         )} />
