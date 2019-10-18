@@ -94,6 +94,7 @@ module.exports = {
       res.status(200).send({
         user: {
           email: userJson.email,
+          CompanyId: userJson.CompanyId,
           id: userJson.id,
           menu: c,
           createdAt: userJson.createdAt,

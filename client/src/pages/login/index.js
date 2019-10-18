@@ -64,7 +64,7 @@ export default function Login() {
 		formData: { email: '', password: '' }
 	})
 
-	const { isLoading, status, message } = authState;
+	const { isLoading, status } = authState;
 	const buttonClassname = clsx({
 		[classes.buttonSuccess]: status === 200,
 		[classes.buttonError]: status !== 200,
@@ -76,13 +76,8 @@ export default function Login() {
 		setState({ formData });
 	}
 	const onShowSnackbar = () => {
-		let title = '';
-		if (status === 403) {
-			title = 'You are off duty. Please contact your supervisor'
-		} else {
-			title = message
-		}
-		return <Snackbars msg={title} />
+		let title = 'Check Your Credential Correctly !!!';
+		return <Snackbars open msg={title} />
 	}
 
 	const handleOnSubmit = (event) => {

@@ -7,8 +7,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Role.associate = function (models) {
         Role.belongsTo(models.Company);
-        Role.belongsTo(models.Module);
-        Role.belongsTo(models.Feature);
     }
 
     return Role
