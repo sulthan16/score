@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         emailVerification: DataTypes.ENUM('1', '0'),
         password: DataTypes.STRING,
         token: DataTypes.TEXT,
+        level: DataTypes.INTEGER,
         fcnTokenWeb: DataTypes.TEXT,
         fcnTokenMobile: DataTypes.TEXT
     }, {

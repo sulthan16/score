@@ -1,4 +1,4 @@
-import ProductService from 'services/product';
+import UserService from 'services/users';
 import { notifUtils } from 'components/NotifUtil';
 
 export const get = async (store, query) => {
@@ -6,7 +6,7 @@ export const get = async (store, query) => {
     const status = 200;
     store.setState({ isLoading, status, data: [] });
     try {
-        const response = await ProductService.getData(query);
+        const response = await UserService.getData(query);
         const data = response.data;
         let result = data.result;
         const isLoading = false;
@@ -25,7 +25,7 @@ export const find = async (store, query) => {
     const status = 200;
     store.setState({ isLoading, status, data: [] });
     try {
-        const response = await ProductService.findData(query);
+        const response = await UserService.findData(query);
         const data = response.data;
         let result = data.result;
         const isLoading = false;
@@ -46,7 +46,7 @@ export const store = async (store, value) => {
     const status = 200;
     store.setState({ isLoading, status });
     try {
-      const response = await ProductService.storeData(value);
+      const response = await UserService.storeData(value);
       const data = response.data;
       const isLoading = false;
       const status = data.message;
@@ -66,7 +66,7 @@ export const store = async (store, value) => {
     const status = 200;
     store.setState({ isLoading, status });
     try {
-      const response = await ProductService.putData(value);
+      const response = await UserService.putData(value);
       const data = response.data;
       const isLoading = false;
       const status = data.message;
@@ -86,7 +86,7 @@ export const deleted = async (store, query) => {
     const status = 200;
     store.setState({ isLoading, status, data: [] });
     try {
-        const response = await ProductService.deleteData(query);
+        const response = await UserService.deleteData(query);
         const data = response.data;
         const isLoading = false;
         const lastPage = false;

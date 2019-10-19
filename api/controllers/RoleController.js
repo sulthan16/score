@@ -8,23 +8,14 @@ module.exports = {
             const search = (req.query.search)
                 ? req.query.search : ''
 
-            const categories = await RoleAccess.findAll({
-                limit: num,
-                // where: {
-                //     $or: [
-                //         'title'
-                //     ].map(value => ({
-                //         [value]: {
-                //             $like: `%${search}%`
-                //         }
-                //     }))
-                // }
+            const roleAccess = await RoleAccess.findAll({
+                limit: num
             })
-            res.status(200).send({ result: categories, status: 200 });
+            res.status(200).send({ result: roleAccess, status: 200 });
         } catch (err) {
             console.log(err);
             res.status(500).send({
-                error: 'error while fething data categories APIs'
+                error: 'error while fething data role APIs'
             })
         }
     },
@@ -37,7 +28,7 @@ module.exports = {
             res.status(200).send({ result: roleAccess, status: 200 });
         } catch (err) {
             res.status(500).send({
-                error: 'error while inserting data products APIs'
+                error: 'error while inserting data role APIs'
             })
         }
     },
@@ -54,7 +45,7 @@ module.exports = {
             res.status(200).send({ result: roleAccess, status: 200 });
         } catch (err) {
             res.status(500).send({
-                error: 'error while inserting data products APIs'
+                error: 'error while inserting data role APIs'
             })
         }
     },

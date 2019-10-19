@@ -5,7 +5,7 @@ import BaseLayout from 'components/layout';
 import {
     Button, makeStyles, Grid
 } from '@material-ui/core';
-import { Edit} from '@material-ui/icons';
+import { Edit } from '@material-ui/icons';
 import productStore from './store';
 import { submitForm } from './containers/form';
 // import { showDetail } from './containers/detail';
@@ -34,14 +34,16 @@ function AllItems(props) {
     const [productState, productActions] = productStore();
     const [state,] = React.useState({
         columns: [
-            { title: 'Name', field: 'title' }
+            { title: 'Email', field: 'email' },
+            { title: 'Level', field: 'level' },
+            { title: 'Company', field: 'Company.name' }
         ]
     });
 
     React.useEffect(() => {
         productActions.get();
     }, [componentWillMount, productActions]);
-    
+
     const handleProductActions = (value) => {
         if (value) {
             submitForm('Edit Katalog', value).then(

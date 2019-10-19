@@ -8,13 +8,19 @@
   {
     "name": "Owner",
     "CompanyId": 1,
-    "level": 1,
+    "level": 2,
+    "notificationLevel": 1
+  },
+  {
+    "name": "Manager",
+    "CompanyId": 1,
+    "level": 3,
     "notificationLevel": 1
   },
   {
     "name": "Cashier",
     "CompanyId": 1,
-    "level": 1,
+    "level": 4,
     "notificationLevel": 1
   }
 ]

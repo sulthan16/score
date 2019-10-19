@@ -2,18 +2,28 @@
     {
       "email":"sulthan@izy.ai",
       "password":"admin",
-      "RoleId":1
+      "RoleId":1,
+      "level":1
     },
     {
       "email":"adhe@izy.ai",
       "password":"admin",
       "CompanyId":1,
-      "RoleId":2
+      "RoleId":2,
+      "level":2
+    },
+    {
+      "email":"manager@izy.ai",
+      "password":"admin",
+      "CompanyId":1,
+      "RoleId":3,
+      "level":3
     },
     {
       "email":"cashier@izy.ai",
       "password":"admin",
       "CompanyId":1,
-      "RoleId":3
+      "RoleId":4,
+      "level":4
     }
   ]
