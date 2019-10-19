@@ -1,4 +1,4 @@
-const { User, Company } = require('../models');
+const { User, Company, Role } = require('../models');
 module.exports = {
     async get(req, res) {
         try {
@@ -26,7 +26,7 @@ module.exports = {
             const user = await User.findAll({
                 limit: num,
                 where,
-                include: [Company]
+                include: [{ model: Company },{ model: Role }]
             })
 
             res.status(200).send({ result: user, status: 200 });
@@ -83,7 +83,7 @@ module.exports = {
                     status: 200,
                     result: user
                 })
-            }else {
+            } else {
                 res.status(200).send({
                     status: 200,
                     result: {},

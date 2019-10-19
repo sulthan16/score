@@ -9,16 +9,26 @@ export default class UserService {
     static storeData = async (value) => {
         const instance = await ApiService();
         const params = {
-            title: value.title,
-            thumb: value.thumb
+            email: value.email,
+            password: value.password,
+            level: value.level.data.id,
+            RoleId: value.level.data.level,
+            name: value.name,
+            employeeId: value.employeeId,
+            photos: value.photos
         }
         return instance.post(`/insertUser`, params);
     }
     static putData = async (value) => {
         const instance = await ApiService();
         const params = {
-            title: value.title,
-            thumb: value.thumb
+            email: value.email,
+            password: value.password,
+            level: value.level.data.id,
+            RoleId: value.level.data.level,
+            name: value.name,
+            employeeId: value.employeeId,
+            photos: value.photos
         }
         return instance.put(`/updateUser/${value.id}`, params);
     }

@@ -28,14 +28,15 @@ const useStyles = makeStyles(theme => ({
         color: 'rgba(255, 255, 255, 0.54)',
     }
 }));
-function AllItems(props) {
+function User(props) {
     const classes = useStyles();
+    const { params } = props;
     const [componentWillMount, setComponentWillMount] = React.useState(false);
     const [productState, productActions] = productStore();
     const [state,] = React.useState({
         columns: [
             { title: 'Email', field: 'email' },
-            { title: 'Level', field: 'level' },
+            { title: 'Level', field: 'Role.name' },
             { title: 'Company', field: 'Company.name' }
         ]
     });
@@ -46,12 +47,12 @@ function AllItems(props) {
 
     const handleProductActions = (value) => {
         if (value) {
-            submitForm('Edit Katalog', value).then(
+            submitForm('Edit User', value).then(
                 (onProcess) => { setComponentWillMount(!componentWillMount); },
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
         } else {
-            submitForm('Tambah Katalog', value).then(
+            submitForm('Tambah User', value).then(
                 (onProcess) => { setComponentWillMount(!componentWillMount); },
                 (onCancel) => { setComponentWillMount(!componentWillMount); }
             );
@@ -65,9 +66,9 @@ function AllItems(props) {
             <React.Fragment>
                 <Grid container className={classes.header}>
                     <Grid item xs='auto' direction="row" container justify="flex-end" alignItems="center">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => handleProductActions(null)}>
+                        {params.create && (<Button variant="contained" color="primary" className={classes.button} onClick={() => handleProductActions(null)}>
                             Tambah
-                        </Button>
+                        </Button>)}
                     </Grid>
                 </Grid>
                 <Grid>
@@ -75,7 +76,7 @@ function AllItems(props) {
                         title="Users Management"
                         columns={state.columns}
                         data={productState.data}
-                        editable={{
+                        editable={params.delete ? {
                             onRowDelete: oldData =>
                                 new Promise(resolve => {
                                     setTimeout(async () => {
@@ -84,8 +85,8 @@ function AllItems(props) {
                                         setComponentWillMount(!componentWillMount);
                                     }, 600);
                                 }),
-                        }}
-                        actions={[
+                        } : false}
+                        actions={params.put ? [
                             {
                                 icon: Edit,
                                 tooltip: 'Update',
@@ -93,7 +94,7 @@ function AllItems(props) {
                                     handleProductActions(rowData);
                                 }
                             }
-                        ]}
+                        ] : false}
                     />
                 </Grid>
             </React.Fragment>
@@ -101,4 +102,4 @@ function AllItems(props) {
     );
 }
 
-export default AllItems;
+export default User;

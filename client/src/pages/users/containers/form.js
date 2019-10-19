@@ -42,16 +42,12 @@ function Form(props) {
     const [state, setState] = React.useState({
         formData: {
             id: '',
-            stok: 0,
-            title: '',
-            price: '',
-            sellPrice: '',
-            thumb: '',
-            images: '',
-            barcode: '',
-            type: '',
-            discon: '',
-            CategoryId: ''
+            email: '',
+            name: '',
+            employeeId: '',
+            photos: '',
+            password: '',
+            level: ''
         }
     });
     const [componentWillMount] = React.useState(false);
@@ -61,20 +57,12 @@ function Form(props) {
             setState({
                 formData: {
                     id: data.id,
-                    title: data.title,
-                    stock: data.stock,
-                    price: data.price,
-                    sellPrice: data.sellPrice,
-                    thumb: data.thumb,
-                    // images: JSON.parse(data.images),
-                    barcode: data.barcode,
-                    type: data.type,
-                    discon: data.discon,
-                    CategoryId: {
-                        value: data.CategoryId, label: data.categoryTitle, data: {
-                            id: data.CategoryId, title: data.categoryTitle
-                        }
-                    }
+                    email: data.email,
+                    name: '',
+                    employeeId: '',
+                    photos: '',
+                    password: null,
+                    level: data.level
                 }
             })
         }
@@ -104,13 +92,11 @@ function Form(props) {
         confirm("Submit", "Are you sure to Submit ?").then(
             async (onProcess) => {
                 if (data) {
-                    formData['images'] = appState.imageUpload;
                     setState({ formData });
                     await productActions.put(state.formData);
                     handleCloseDialog();
                     proceed();
                 } else {
-                    formData['images'] = appState.imageUpload;
                     setState({ formData });
                     await productActions.store(state.formData);
                     handleCloseDialog();
@@ -134,7 +120,7 @@ function Form(props) {
 
     const handleChangeCateogry = (data) => {
         const { formData } = state;
-        formData['CategoryId'] = data;
+        formData['level'] = data;
         setState({ formData });
     }
     const getSearchCategory = (categoryState && categoryState.data.map(category =>
@@ -145,59 +131,61 @@ function Form(props) {
                 <ValidatorForm id="myform" encType="multipart/form-data" onSubmit={(e) => { handleSubmit(e) }}>
                     <Grid container justify="center">
                         <Grid container justify="center" item xs={width === 'lg' ? 8 : 12}>
-                            <Typography variant="subtitle1" className={classes.header} gutterBottom >Silahkan Isi Data Katalog di Bawah ini:</Typography>
+                            <Typography variant="subtitle1" className={classes.header} gutterBottom >Silahkan Isi Data Diri di Bawah ini:</Typography>
                             <Grid container item xs={12}>
                                 <Typography variant="subtitle1" className={classes.section} gutterBottom >
-                                    Nama Barang ,Category & Stok</Typography>
+                                    Data Pegawai</Typography>
                             </Grid>
                             <Grid container item xs={11}>
                                 <TextValidator
-                                    id="barcode"
-                                    label="Barcode"
-                                    name="barcode"
+                                    id="email"
+                                    label="Email"
+                                    name="email"
                                     className={classes.textField}
+                                    type="email"
                                     margin="normal"
                                     variant="outlined"
-                                    value={state.formData.barcode}
-                                    validators={['required']}
-                                    errorMessages={['Barcode Barang Harus Di isi']}
+                                    value={state.formData.email}
+                                    validators={['required', 'isEmail']}
+                                    errorMessages={['Email Harus Diisi', 'Email Tidak Valid']}
                                     onChange={handleChange}
                                     autoFocus
                                 />
                                 <TextValidator
-                                    id="title"
-                                    label="Nama Barang"
-                                    name="title"
+                                    id="name"
+                                    label="Nama"
+                                    name="name"
                                     className={classes.textField}
+                                    type="text"
                                     margin="normal"
                                     variant="outlined"
-                                    value={state.formData.title}
+                                    value={state.formData.name}
                                     validators={['required']}
-                                    errorMessages={['Nama Barang Harus Di isi']}
+                                    errorMessages={['Nama Harus Diisi']}
                                     onChange={handleChange}
                                 />
                                 <TextValidator
-                                    id="stock"
-                                    label="Stok Barang"
-                                    name="stock"
+                                    id="employeeId"
+                                    label="Id Karyawan"
+                                    name="employeeId"
                                     className={classes.textField}
+                                    type="text"
                                     margin="normal"
-                                    type="number"
-                                    value={state.formData.stock}
                                     variant="outlined"
+                                    value={state.formData.employeeId}
                                     validators={['required']}
-                                    errorMessages={['Stok Barang Harus Di isi']}
-                                    onChange={(e) => handleChange(e)}
+                                    errorMessages={['Id Karyawan Harus Diisi']}
+                                    onChange={handleChange}
                                 />
                                 <SelectValidate
-                                    value={state.formData.CategoryId}
-                                    id="category"
-                                    name="category"
-                                    inputId="categoryId"
+                                    value={state.formData.level}
+                                    id="level"
+                                    name="level"
+                                    inputId="level"
                                     TextFieldProps={{
-                                        label: 'Cari Kategori',
+                                        label: 'Cari Posisi',
                                         InputLabelProps: {
-                                            htmlFor: 'category',
+                                            htmlFor: 'level',
                                             shrink: true,
                                         },
                                     }}
@@ -205,49 +193,23 @@ function Form(props) {
                                     options={getSearchCategory}
                                     onChange={handleChangeCateogry}
                                 />
-                            </Grid>
-                            <Grid container item xs={12}>
-                                <Typography variant="subtitle1" className={classes.section} gutterBottom >
-                                    Harga Modal , Harga Jual & Diskon</Typography>
-                            </Grid>
-                            <Grid container item xs={11} style={{ paddingBottom: 30 }}>
                                 <TextValidator
-                                    id="price"
-                                    label="Harga Modal"
-                                    name="price"
+                                    id="password"
+                                    label="Password"
+                                    name="password"
                                     className={classes.textField}
+                                    type="password"
                                     margin="normal"
                                     variant="outlined"
-                                    type="number"
-                                    value={state.formData.price}
+                                    value={state.formData.password}
                                     validators={['required']}
-                                    errorMessages={['Harga Modal Harus Di Isi']}
+                                    errorMessages={['Password Harus Diisi']}
                                     onChange={handleChange}
                                 />
-                                <TextValidator
-                                    id="sellPrice"
-                                    label="Harga Jual"
-                                    name="sellPrice"
-                                    className={classes.textField}
-                                    margin="normal"
-                                    type="sellPrice"
-                                    value={state.formData.sellPrice}
-                                    variant="outlined"
-                                    validators={['required']}
-                                    errorMessages={['Harga Jual Harus di Isi']}
-                                    onChange={(e) => handleChange(e)}
-                                />
                             </Grid>
                             <Grid container item xs={12}>
                                 <Typography variant="subtitle1" className={classes.section} gutterBottom >
-                                    Upload Gambar</Typography>
-                            </Grid>
-                            <Grid container justify="center" item xs={11} style={{ paddingBottom: 30 }}>
-                                <Upload inputValue={state.formData.images} />
-                            </Grid>
-                            <Grid container item xs={12}>
-                                <Typography variant="subtitle1" className={classes.section} gutterBottom >
-                                    Upload Thumbnail</Typography>
+                                    Upload Photo Pegawai</Typography>
                             </Grid>
                             <Grid container justify="center" item xs={11} style={{ paddingBottom: 30 }}>
                                 <SingleUpload
@@ -258,7 +220,7 @@ function Form(props) {
                                             AppService.uploadImage(form).then(response => {
                                                 let data = response.data.result;
                                                 const { formData } = state;
-                                                formData['thumb'] = data;
+                                                formData['photos'] = data;
                                                 setState({ formData });
                                                 resolve(true);
                                             }).catch(error => {
