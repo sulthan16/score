@@ -1,29 +1,41 @@
 [
-    {
-      "email":"sulthan@izy.ai",
-      "password":"admin",
-      "RoleId":1,
-      "level":1
-    },
-    {
-      "email":"adhe@izy.ai",
-      "password":"admin",
-      "CompanyId":1,
-      "RoleId":2,
-      "level":2
-    },
-    {
-      "email":"manager@izy.ai",
-      "password":"admin",
-      "CompanyId":1,
-      "RoleId":3,
-      "level":3
-    },
-    {
-      "email":"cashier@izy.ai",
-      "password":"admin",
-      "CompanyId":1,
-      "RoleId":4,
-      "level":4
-    }
-  ]
+  {
+    "email": "sulthan@izy.ai",
+    "password": "admin",
+    "name": "Sulthan Aulia",
+    "employeeId": "11111111",
+    "photos": "",
+    "RoleId": 1,
+    "level": 1
+  },
+  {
+    "email": "adhe@izy.ai",
+    "password": "admin",
+    "name": "Adhe Aryono",
+    "employeeId": "22222222",
+    "photos": "",
+    "CompanyId": 1,
+    "RoleId": 2,
+    "level": 2
+  },
+  {
+    "email": "manager@izy.ai",
+    "password": "admin",
+    "name": "Manager Aryono",
+    "employeeId": "22222222",
+    "photos": "",
+    "CompanyId": 1,
+    "RoleId": 3,
+    "level": 3
+  },
+  {
+    "email": "cashier@izy.ai",
+    "password": "admin",
+    "name": "Cashier Pandi",
+    "employeeId": "22222222",
+    "photos": "",
+    "CompanyId": 1,
+    "RoleId": 4,
+    "level": 4
+  }
+]

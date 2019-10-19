@@ -23,7 +23,6 @@ export default class UserService {
         const instance = await ApiService();
         const params = {
             email: value.email,
-            password: value.password,
             level: value.level.data.id,
             RoleId: value.level.data.level,
             name: value.name,

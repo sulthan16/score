@@ -57,7 +57,6 @@ module.exports = {
         try {
             const user = await User.update({
                 email: req.body.email,
-                password: req.body.password,
                 level: req.body.level,
                 CompanyId: req.body.CompanyId,
                 RoleId: req.body.RoleId

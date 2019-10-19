@@ -61,7 +61,7 @@ function Form(props) {
                     name: '',
                     employeeId: '',
                     photos: '',
-                    password: null,
+                    password: data.password,
                     level: data.level
                 }
             })
@@ -193,7 +193,7 @@ function Form(props) {
                                     options={getSearchCategory}
                                     onChange={handleChangeCateogry}
                                 />
-                                <TextValidator
+                                {!data &&(<TextValidator
                                     id="password"
                                     label="Password"
                                     name="password"
@@ -205,7 +205,7 @@ function Form(props) {
                                     validators={['required']}
                                     errorMessages={['Password Harus Diisi']}
                                     onChange={handleChange}
-                                />
+                                />)}
                             </Grid>
                             <Grid container item xs={12}>
                                 <Typography variant="subtitle1" className={classes.section} gutterBottom >

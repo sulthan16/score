@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             unique: true
         },
+        name: DataTypes.STRING,
+        employeeId: DataTypes.STRING,
+        photos: DataTypes.STRING,
         emailVerification: DataTypes.ENUM('1', '0'),
         password: DataTypes.STRING,
         token: DataTypes.TEXT,
@@ -32,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
             beforeSave: hashPassword
         }
     })
-    
+
     User.associate = function (models) {
         User.belongsTo(models.Company);
         User.belongsTo(models.Role);
